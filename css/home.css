@@ -119,7 +119,17 @@
   margin-bottom: 8px;
 }
 
-@media screen and (min-width: 415px) {
+@media screen and (min-width: 415px) and (max-width: 768px) {
+  .main .poster-image-container {
+    width: 396px;
+  }
+
+  .main .poster-image {
+    height: 252px;
+  }
+}
+
+@media screen and (min-width: 769px) {
   .container header h1 {
     left: 50%;
     position: absolute;

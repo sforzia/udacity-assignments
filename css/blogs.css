@@ -105,7 +105,10 @@
   box-shadow: 0 0 4px 0px gray;
 }
 
-@media screen and (min-width: 415px) {
+@media screen and (min-width: 415px) and (max-width: 768px) {
+}
+
+@media screen and (min-width: 769px) {
   .container.blogs {
     grid-template-columns: 300px 1fr;
     grid-template-rows: 70px 1fr 84px;
