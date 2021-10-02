@@ -105,6 +105,12 @@
   box-shadow: 0 0 4px 0px gray;
 }
 
+@media screen and (max-width: 325px) {
+  .blogs .main .heading {
+    margin-top: 40px;
+  }
+}
+
 @media screen and (min-width: 415px) and (max-width: 768px) {
 }
 
