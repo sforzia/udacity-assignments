@@ -36,9 +36,6 @@
   height: 36px;
   border-radius: 4px;
   transition: transform 1s;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-image: url(../assets/images/react-js.svg);
 }
 
 .site-logo:hover {
@@ -82,6 +79,7 @@
 
 .main .poster-image-container {
   left: 50%;
+  margin: 0;
   width: 290px;
   position: relative;
   transform: translateX(-50%);

@@ -33,25 +33,25 @@ li a {
   display: block;
 }
 
-.fb {
-  background-image: url(../assets/images/facebook.png);
-}
-.fb:hover {
-  background-image: url(../assets/images/facebook-hover.png);
+li a img {
+  width: 100%;
+  height: 100%;
 }
 
-.twitter {
-  background-image: url(../assets/images/twitter.png);
+.fb a img:last-child,
+.twitter a img:last-child,
+.linkedin a img:last-child {
+  display: none;
 }
 
-.twitter:hover {
-  background-image: url(../assets/images/twitter-hover.png);
+.fb:hover a img:last-child,
+.twitter:hover a img:last-child,
+.linkedin:hover a img:last-child {
+  display: initial;
 }
 
-.linkedin {
-  background-image: url(../assets/images/linkedin.png);
-}
-
-.linkedin:hover {
-  background-image: url(../assets/images/linkedin-hover.png);
+.fb:hover a img:first-child,
+.twitter:hover a img:first-child,
+.linkedin:hover a img:first-child {
+  display: none;
 }

@@ -49,27 +49,12 @@
 .card--title-image {
   width: 32px;
   height: 32px;
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
-.react-js {
-  background-image: url(../assets/images/react-js.svg);
 }
 
 .react-router {
   width: 59px;
   height: 32px;
   background-color: gray;
-  background-image: url(../assets/images/react-router.png);
-}
-
-.redux {
-  background-image: url(../assets/images/redux.svg);
-}
-
-.react-testing-library {
-  background-image: url(../assets/images/react-testing-library.png);
 }
 
 .card--summary-text {

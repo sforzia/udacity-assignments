@@ -12,7 +12,7 @@
 <body>
     <div class='container'>
         <header class="header">
-            <div class="site-logo"></div>
+            <img class="site-logo" src="./assets/images/react-js.svg" alt="React JS" />
             <nav class='navigation'>
                 <ul class="navigation-list">
                     <li class="navigation-list--item">
@@ -26,11 +26,10 @@
         </header>
         <main class="main">
             <h1 class="heading">Front end Technologies</h1>
-            <div class="poster-image-container">
-                <div role='img' class="poster-image" aria-label="Keyboard keys kept on a table denoting W, E, and B.">
-                </div>
+            <figure class="poster-image-container">
+                <img class="poster-image" aria-label="Keyboard keys kept on a table denoting W, E, and B." />
                 <figcaption>Fig.1 <em>Source: Creative Tim</em></figcaption>
-            </div>
+            </figure>
             <article class="main-article">
                 <p>Hi, I am <strong>Syed Ziaul Ameen</strong>, currently working as a front end engineer
                     and I am here to gain knowledge and practical experience in front end web development.</p>
@@ -42,7 +41,7 @@
                     <div class="card--wrapper">
                         <div class="card--title-wrapper">
                             <h2 class="card--title">React JS</h2>
-                            <div class="card--title-image react-js"></div>
+                            <img class="card--title-image" src="./assets/images/react-js.svg" alt="React JS" />
                         </div>
                         <p class="card--summary-text">ReactJS is a library built for developing UI using a component
                             based approach.</p>
@@ -54,10 +53,9 @@
                 </div>
                 <div class="card">
                     <div class="card--wrapper">
-
                         <div class="card--title-wrapper">
                             <h2 class="card--title">Redux</h2>
-                            <div class="card--title-image redux"></div>
+                            <img class="card--title-image" src="./assets/images/redux.svg" alt="Redux" />
                         </div>
                         <p class="card--summary-text">Redux is a state management library. It allows developers to store
                             and manage application data using a centralized state.</p>
@@ -72,7 +70,7 @@
 
                         <div class="card--title-wrapper">
                             <h2 class="card--title">Thunks</h2>
-                            <div class="card--title-image thunks"></div>
+                            <img class="card--title-image" src="./assets/images/redux.svg" alt="Thunks" />
                         </div>
                         <p class="card--summary-text">A thunk is a function that wraps an expression to delya its
                             evaluation. These type of functionality is needed for async behaviour.</p>
@@ -87,7 +85,8 @@
 
                         <div class="card--title-wrapper">
                             <h2 class="card--title">React Router</h2>
-                            <div class="card--title-image react-router"></div>
+                            <img class="card--title-image react-router" src="./assets/images/react-router.png"
+                                alt="React Router" />
                         </div>
                         <p class="card--summary-text">React Router is used for clear navigation paths that can be
                             bookmarked.</p>
@@ -102,7 +101,8 @@
 
                         <div class="card--title-wrapper">
                             <h2 class="card--title">React Testing Library</h2>
-                            <div class="card--title-image react-testing-library"></div>
+                            <img class="card--title-image" src="./assets/images/react-testing-library.png"
+                                alt="React Testing Library" />
                         </div>
                         <p class="card--summary-text">To verify that components are working as per the specified
                             requirements, we have React Testing Library.</p>
@@ -119,13 +119,22 @@
         <footer class="footer">
             <ul class="social-links">
                 <li class="fb">
-                    <a href="https://www.facebook.com/" title="facebook"></a>
+                    <a href="https://www.facebook.com/" title="facebook">
+                        <img src="./assets/images/facebook.png" aria-hidden="true" />
+                        <img src="./assets/images/facebook-hover.png" aria-hidden="true" />
+                    </a>
                 </li>
                 <li class="twitter">
-                    <a href="https://www.twitter.com/" title="twitter"></a>
+                    <a href="https://www.twitter.com/" title="twitter">
+                        <img src="./assets/images/twitter.png" aria-hidden="true" />
+                        <img src="./assets/images/twitter-hover.png" aria-hidden="true" />
+                    </a>
                 </li>
                 <li class="linkedin">
-                    <a href="https://www.linkedin.com/" title="linked in"></a>
+                    <a href="https://www.linkedin.com/" title="linked in">
+                        <img src="./assets/images/linkedin.png" aria-hidden="true" />
+                        <img src="./assets/images/linkedin-hover.png" aria-hidden="true" />
+                    </a>
                 </li>
             </ul>
             <p>&copy; Copyright Syed Ziaul Ameen 2021</p>
