@@ -1,0 +1,135 @@
+.container.blogs {
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: 70px 70px 1fr 84px;
+  grid-template-areas: "header" "aside" "main" "footer";
+}
+
+.blogs header {
+  grid-area: header;
+}
+
+.blogs .aside {
+  grid-area: aside;
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.blogs .aside a {
+  margin-left: 8px;
+  padding: 4px 8px;
+  font-weight: 500;
+  border-radius: 4px;
+  margin-bottom: 16px;
+  color: white;
+  background: #512121;
+}
+
+.blogs .main {
+  grid-area: main;
+
+  display: flex;
+  row-gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.main .blog-post {
+  box-shadow: 0 0 2px 1px gray;
+  background: blanchedalmond;
+}
+
+.blog-post .info-box {
+  padding: 0 4px 4px 4px;
+}
+
+.blogs .footer {
+  grid-area: footer;
+}
+
+.blog-post header {
+  background: #b8d3e6;
+}
+
+.blog-post .intro {
+  display: flex;
+  flex-direction: row;
+}
+
+.blog-post .intro-menu {
+  display: flex;
+  flex-direction: column;
+  margin-left: 30px;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.blog-post .avatar-image {
+  width: 100px;
+  height: 100px;
+  margin: 10px 30px;
+  border-radius: 50%;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-image: url(../assets/images/avatar.jpg);
+}
+
+.blog-post .external-links {
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: end;
+}
+
+.blog-post .external-links a {
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.blog-post .external-links a:hover {
+  box-shadow: 0 0 4px 0px gray;
+}
+
+.external-links .twitter,
+.external-links .linkedin,
+.external-links .facebook {
+  background: none;
+}
+
+.external-links .twitter a {
+  background-image: url(../assets/images/twitter-article.png);
+}
+.external-links .linkedin a {
+  background-image: url(../assets/images/linkedin-article.png);
+}
+.external-links .facebook a {
+  background-image: url(../assets/images/facebook-article.png);
+}
+
+@media screen and (min-width: 415px) {
+  .container.blogs {
+    grid-template-columns: 300px 1fr;
+    grid-template-rows: 70px 1fr 84px;
+    grid-template-areas: "header header" "aside main" "footer footer";
+  }
+
+  .blogs .aside {
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+
+  .blogs .main {
+    row-gap: 40px;
+  }
+}
