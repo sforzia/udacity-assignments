@@ -17,10 +17,12 @@
  * Define Global Variables
  *
  */
+let prevScrollpos = window.pageYOffset;
 const liFragment = new DocumentFragment();
 const mainHeading = document.querySelector("header h1");
 const sections = document.querySelectorAll("main section");
 const ul = document.querySelector("body header ul#navbar__list");
+const navHeader = document.querySelector("header.page__header");
 
 /**
  * End Global Variables
@@ -57,10 +59,17 @@ const addClickListenersOnAnchorTags = () => {
 };
 
 const onScrollHandler = (event) => {
+  let currentScrollPos = window.pageYOffset;
   const moveToTopButton = document.querySelector("#moveToTopBtn");
   const hiddenSpanTop = document
     .querySelector("#hiddenSpan")
     .getBoundingClientRect().top;
+  if (prevScrollpos > currentScrollPos) {
+    navHeader.style.top = "0";
+  } else {
+    navHeader.style.top = "-52px";
+  }
+  prevScrollpos = currentScrollPos;
   if (hiddenSpanTop < -150) {
     moveToTopButton.classList.add("show");
   } else {
