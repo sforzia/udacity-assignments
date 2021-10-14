@@ -64,7 +64,9 @@ const onScrollHandler = (event) => {
   const hiddenSpanTop = document
     .querySelector("#hiddenSpan")
     .getBoundingClientRect().top;
-  if (prevScrollpos > currentScrollPos) {
+
+  // console.log();
+  if (prevScrollpos - currentScrollPos >= 0) {
     navHeader.style.top = "0";
   } else {
     navHeader.style.top = "-52px";
