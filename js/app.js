@@ -59,6 +59,7 @@ const addClickListenersOnAnchorTags = () => {
 };
 
 const onScrollHandler = (event) => {
+  console.log("here onScrollHandler");
   let currentScrollPos = window.pageYOffset;
   const moveToTopButton = document.querySelector("#moveToTopBtn");
   const hiddenSpanTop = document
@@ -69,7 +70,8 @@ const onScrollHandler = (event) => {
   if (prevScrollpos - currentScrollPos >= 0) {
     navHeader.style.top = "0";
   } else {
-    navHeader.style.top = "-52px";
+    const { height } = navHeader.getBoundingClientRect();
+    navHeader.style.top = `-${height}px`;
   }
   prevScrollpos = currentScrollPos;
   if (hiddenSpanTop < -150) {
@@ -100,11 +102,19 @@ const setActiveState = (navId) => {
 };
 
 const isInViewport = (element) => {
-  const rect = element.getBoundingClientRect();
-  const { bottom, top } = rect;
+  var rect = element.getBoundingClientRect(),
+    vHeight = window.innerHeight || document.documentElement.clientHeight,
+    efp = function (x, y) {
+      return document.elementFromPoint(x, y);
+    };
+
+  if (rect.bottom < 0 || rect.top > vHeight) return false;
+
   return (
-    top >= 0 &&
-    bottom <= (window.innerHeight || document.documentElement.clientHeight)
+    element.contains(efp(rect.left, rect.top)) ||
+    element.contains(efp(rect.right, rect.top)) ||
+    element.contains(efp(rect.right, rect.bottom)) ||
+    element.contains(efp(rect.left, rect.bottom))
   );
 };
 /**
