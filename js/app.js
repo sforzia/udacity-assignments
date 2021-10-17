@@ -30,7 +30,9 @@ const navHeader = document.querySelector("header.page__header");
  *
  */
 
+// build the nav
 const createAndAppendNavItems = () => {
+  // Build menu
   for (let section of sections) {
     const li = document.createElement("li");
     const a = document.createElement("a");
@@ -44,13 +46,16 @@ const createAndAppendNavItems = () => {
   ul.appendChild(liFragment);
 };
 
-function onAnchorTagClick(e) {
+// Scroll to section on link click
+// Scroll to anchor ID using scrollTO event
+const onAnchorTagClick = (e) => {
   e.preventDefault();
   document.querySelector(this.getAttribute("href")).scrollIntoView({
     behavior: "smooth",
   });
-}
+};
 
+// adding custom click event listeners to anchor tags in the nav list to override default click behavior.
 const addClickListenersOnAnchorTags = () => {
   const anchorTags = ul.querySelectorAll("a[href]");
   anchorTags.forEach((anchorTag) => {
@@ -58,15 +63,17 @@ const addClickListenersOnAnchorTags = () => {
   });
 };
 
+/**
+ * function which will be passed as callback to the document scroll event listener.
+ * this function toggles the active class on sections.
+ * it also show/hide the header when user scrolls the page.
+ */
 const onScrollHandler = (event) => {
-  console.log("here onScrollHandler");
   let currentScrollPos = window.pageYOffset;
   const moveToTopButton = document.querySelector("#moveToTopBtn");
   const hiddenSpanTop = document
     .querySelector("#hiddenSpan")
     .getBoundingClientRect().top;
-
-  // console.log();
   if (prevScrollpos - currentScrollPos >= 0) {
     navHeader.style.top = "0";
   } else {
@@ -79,17 +86,21 @@ const onScrollHandler = (event) => {
   } else {
     moveToTopButton.classList.remove("show");
   }
+
+  // Add class 'active' to section when near top of viewport
   for (let section of sections) {
     const check = isInViewport(section);
     if (check) {
       setActiveState(section.id);
       section.classList.add("active");
     } else {
+      // Set sections as active
       section.classList.remove("active");
     }
   }
 };
 
+// function to toggle active class from nav items.
 const setActiveState = (navId) => {
   const lis = ul.querySelectorAll("li");
   for (let li of lis) {
@@ -101,8 +112,9 @@ const setActiveState = (navId) => {
   }
 };
 
+// Function to check if the given element is currently visible in the viewport.
 const isInViewport = (element) => {
-  var rect = element.getBoundingClientRect(),
+  const rect = element.getBoundingClientRect(),
     vHeight = window.innerHeight || document.documentElement.clientHeight,
     efp = function (x, y) {
       return document.elementFromPoint(x, y);
@@ -122,11 +134,9 @@ const isInViewport = (element) => {
  * Begin Main Functions
  *
  */
-// build the nav
 
-// Add class 'active' to section when near top of viewport
-
-// Scroll to anchor ID using scrollTO event
+createAndAppendNavItems();
+addClickListenersOnAnchorTags();
 
 /**
  * End Main Functions
@@ -134,21 +144,17 @@ const isInViewport = (element) => {
  *
  */
 
-// Build menu
-
-// Scroll to section on link click
-
-// Set sections as active
-
-createAndAppendNavItems();
-
+// to add/remove classes from nav items and sections when user scrolls the page.
 document.addEventListener("scroll", onScrollHandler);
-addClickListenersOnAnchorTags();
+
+// to update the DOM once DOM content is loaded.
 document.addEventListener("DOMContentLoaded", (event) => {
   setTimeout(() => {
     onScrollHandler(event);
   }, 500);
 });
+
+// click event handler to scroll page to the top by referring to a hidden span element.
 document.querySelector("#moveToTopBtn").addEventListener("click", (e) => {
   document.querySelector("#hiddenSpan").scrollIntoView({
     behavior: "smooth",
