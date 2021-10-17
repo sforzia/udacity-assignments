@@ -4,33 +4,22 @@
 
 - [Project Title](#landing-page-project)
 - [Overview](#overview)
-- [Some to test](#some-to-test)
+- [Dependencies](#dependencies)
+- [Installation](#installation)
+- [Usage](#usage)
 
 ### Overview
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+The project demonstrates the power of dynamically creating and adding elements to the DOM. It demonstrates how we can manipulate the DOM by adding, updating, and deleting the innerHTML, attributes, and values of an element.
 
-To get started, open `js/app.js` and start building out the app's functionality
+### Dependencies
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+The project is build using vanilla JS, CSS, and HTML. No third party packages or libraries are required to run this project.
 
-To get started, open `js/app.js` and start building out the app's functionality
+### Installation
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+As the project is build using vanilla JS, CSS, and HTML. No installation is required.
 
-To get started, open `js/app.js` and start building out the app's functionality
+### Usage
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
-
-### some to test
-
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
-
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+The usage is straightforward, just clone the repo on your machine and open the index.html file. You can experiment with the code by modifying the HTML, JS, and CSS source files.
