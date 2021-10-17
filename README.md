@@ -2,6 +2,7 @@
 
 ## Table of Contents
 
+- [Project Title](#landing-page-project)
 - [Overview](#overview)
 
 ## Overview
