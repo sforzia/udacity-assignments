@@ -55,17 +55,23 @@ generateButton.addEventListener("click", (event) => {
             feelings: feelings.value,
           };
           postData("/weatherInfo", _data).then((response) => {
-            response.json().then((data) => {
-              const dataForUI = data[zipCode];
-              const _date = new Date(dataForUI.date);
-              const date =
-                _date.toDateString() + " " + _date.toLocaleTimeString();
-              dateElement.innerHTML = `${date}<br/><span class='country-info'>${dataForUI.name}, ${dataForUI.country}</span>`;
-              entryHolder.style.visibility = "visible";
-              tempElement.innerHTML = `${dataForUI.temperature} &deg;F`;
-              contentElement.innerHTML = `feels like ${dataForUI.feelsLike} &deg;F`;
-              feelingsResponse.innerText = dataForUI.feelings;
-            });
+            if (response.ok) {
+              getData("/weatherInfo").then((response) => {
+                if (response.ok) {
+                  response.json().then((data) => {
+                    const dataForUI = data[zipCode];
+                    const _date = new Date(dataForUI.date);
+                    const date =
+                      _date.toDateString() + " " + _date.toLocaleTimeString();
+                    dateElement.innerHTML = `${date}<br/><span class='country-info'>${dataForUI.name}, ${dataForUI.country}</span>`;
+                    entryHolder.style.visibility = "visible";
+                    tempElement.innerHTML = `${dataForUI.temperature} &deg;F`;
+                    contentElement.innerHTML = `feels like ${dataForUI.feelsLike} &deg;F`;
+                    feelingsResponse.innerText = dataForUI.feelings;
+                  });
+                }
+              });
+            }
           });
         } else {
           let para = "";
