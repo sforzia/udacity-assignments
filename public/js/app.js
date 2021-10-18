@@ -43,7 +43,7 @@ generateButton.addEventListener("click", (event) => {
             date: date,
             temp: temp,
             feel: feelings.value,
-            zipCode: zipInput.value,
+            zipCode: zipInput.value.split(",").join(""),
           };
           postData("/weatherInfo", _data).then((response) => {
             if (response.ok) {
@@ -77,8 +77,7 @@ const updateUI = async () => {
   const request = await getData("/weatherInfo");
   try {
     const allData = await request.json();
-    console.log("allData: ", allData);
-    const data = allData[allData.length - 1];
+    const data = allData[zipInput.value.split(",").join("")];
     document.getElementById("date").innerHTML = data.date;
     document.getElementById("temp").innerHTML = `${data.temp} degrees`;
     document.getElementById("content").innerHTML = data.feel;
