@@ -26,11 +26,6 @@ const messageNode = document.querySelector(".overlay #message");
 const closeOverlayBtn = document.querySelector("#close-overlay");
 const zipInfoHighlighter = document.querySelector("#zip-info-highlighter");
 
-const dateElement = document.querySelector("#date");
-const tempElement = document.querySelector("#temp");
-const contentElement = document.querySelector("#content");
-const feelingsResponse = document.querySelector("#feelings-response");
-
 generateButton.addEventListener("click", (event) => {
   const zipCode = zipInput.value;
   const url = `${baseURL}${zipCode}${apiKey}`;
@@ -38,39 +33,21 @@ generateButton.addEventListener("click", (event) => {
     .then((response) => {
       response.json().then((data) => {
         if (response.ok) {
-          const zipCode = zipInput.value.split(",").join("");
           const {
             dt,
-            name,
-            sys: { country },
-            main: { temp, feels_like },
+            main: { temp },
           } = data;
+          const _date = new Date(dt * 1000);
+          const date = `${_date.toDateString()} ${_date.toLocaleTimeString()}`;
           const _data = {
-            date: dt,
-            name: name,
-            zipCode: zipCode,
-            country: country,
-            temperature: temp,
-            feelsLike: feels_like,
-            feelings: feelings.value,
+            date: date,
+            temp: temp,
+            feel: feelings.value,
+            zipCode: zipInput.value,
           };
           postData("/weatherInfo", _data).then((response) => {
             if (response.ok) {
-              getData("/weatherInfo").then((response) => {
-                if (response.ok) {
-                  response.json().then((data) => {
-                    const dataForUI = data[zipCode];
-                    const _date = new Date(dataForUI.date);
-                    const date =
-                      _date.toDateString() + " " + _date.toLocaleTimeString();
-                    dateElement.innerHTML = `${date}<br/><span class='country-info'>${dataForUI.name}, ${dataForUI.country}</span>`;
-                    entryHolder.style.visibility = "visible";
-                    tempElement.innerHTML = `${dataForUI.temperature} &deg;F`;
-                    contentElement.innerHTML = `feels like ${dataForUI.feelsLike} &deg;F`;
-                    feelingsResponse.innerText = dataForUI.feelings;
-                  });
-                }
-              });
+              updateUI();
             }
           });
         } else {
@@ -87,6 +64,7 @@ generateButton.addEventListener("click", (event) => {
           }
           messageNode.innerText = para;
           overlay.style.visibility = "visible";
+          closeOverlayBtn.focus();
         }
       });
     })
@@ -94,6 +72,19 @@ generateButton.addEventListener("click", (event) => {
       console.log("error occurred: ", error);
     });
 });
+
+const updateUI = async () => {
+  const request = await getData("/weatherInfo");
+  try {
+    const allData = await request.json();
+    console.log("allData: ", allData);
+    const data = allData[allData.length - 1];
+    document.getElementById("date").innerHTML = data.date;
+    document.getElementById("temp").innerHTML = `${data.temp} degrees`;
+    document.getElementById("content").innerHTML = data.feel;
+    entryHolder.style.visibility = "visible";
+  } catch (ex) {}
+};
 
 closeOverlayBtn.addEventListener("click", (e) => {
   messageNode.innerText = "";
