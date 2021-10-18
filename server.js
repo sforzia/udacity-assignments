@@ -18,8 +18,8 @@ app.get("/weatherInfo", (request, response) => {
 
 app.post("/weatherInfo", (request, response) => {
   const data = request.body;
-  projectData[data.zipCode.split(",").join("")] = data;
-  response.send(projectData);
+  projectData[data.zipCode] = data;
+  response.send({ success: true });
 });
 
 const listening = (error) => {
