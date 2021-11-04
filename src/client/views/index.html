@@ -4,40 +4,39 @@
 <head>
     <meta charset="utf-8">
     <title>Test</title>
-    <!-- <link rel="stylesheet" href="/styles/resets.css">
-        <link rel="stylesheet" href="/styles/base.css">
-        <link rel="stylesheet" href="/styles/header.css">
-        <link rel="stylesheet" href="/styles/form.css">
-        <link rel="stylesheet" href="/styles/footer.css"> -->
 </head>
 
 <body>
 
     <header>
-        <div class="">
+        <!-- <div class="">
             Logo
         </div>
         <div class="">
             navigation
-        </div>
+        </div> -->
     </header>
 
     <main>
         <section>
             <form class="">
-                <input id="name" type="text" name="input" value="" placeholder="Name" />
+                <input id="name" type="text" name="input" placeholder="Enter search term" autocomplete="off"
+                    onkeypress="Client.onKeydown(event)" />
                 <button type="submit" name="" onclick="Client.handleSubmit(event)">Submit</button>
             </form>
         </section>
 
         <section>
-            <strong>Form Results:</strong>
-            <div id="results"></div>
+            <h1>Search Results:</h1>
+            <div id="results">
+                <p class="no-results">No search results.</p>
+            </div>
         </section>
     </main>
 
     <footer>
-        <p>This is a footer</p>
+        <p>Syed Ziaul Ameen</p>
+        <p>&copy; Copyright 2021</p>
     </footer>
 
 </body>

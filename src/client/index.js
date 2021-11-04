@@ -1,10 +1,10 @@
 import { checkForName } from "./js/nameChecker";
-import { handleSubmit } from "./js/formHandler";
+import { handleSubmit, onKeydown } from "./js/formHandler";
 
-import "./styles/base.css";
-import "./styles/footer.css";
-import "./styles/form.css";
+import "./styles/form.scss";
+import "./styles/base.scss";
 import "./styles/header.css";
 import "./styles/resets.css";
+import "./styles/footer.scss";
 
-export { checkForName, handleSubmit };
+export { checkForName, handleSubmit, onKeydown };
