@@ -20,7 +20,7 @@ All dependencies for this project to run are already present in the `package.jso
 
 - `npm install`
 
-### Setup MeaningCloud API key:
+### Setup MeaningCloud API key
 
 Next we need to include our API keys for this project to run:
 
