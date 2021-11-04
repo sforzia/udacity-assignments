@@ -8,7 +8,8 @@ function handleSubmit(event) {
     results.innerHTML = "<p><strong>Error:</strong> Input cannot be empty</p>";
     return;
   }
-  Client.checkForName(formText);
+  results.classList.remove("error");
+  results.innerHTML = "<div class='box'><div class='loader'></div></div>";
   fetch(`http://localhost:8081/getMeaningCloudData?input=${formText}`)
     .then((res) => res.json())
     .then(function (res) {

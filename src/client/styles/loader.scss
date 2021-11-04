@@ -1,0 +1,39 @@
+.box {
+  width: 100%;
+  padding: 1em;
+  height: 200px;
+  font-size: 30px;
+  border-radius: 3px;
+  position: relative;
+  //   vertical-align: top;
+  //   margin-bottom: 0.25em;
+  //   display: inline-block;
+  border: 1px solid white;
+  transition: 0.3s color, 0.3s border, 0.3s transform, 0.3s opacity;
+
+  display: flex;
+  justify-content: center;
+
+  .loader {
+    width: 4em;
+    height: 4em;
+    color: inherit;
+    pointer-events: none;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: black;
+    animation: loader 1.2s infinite ease-in-out;
+  }
+
+  @keyframes loader {
+    0% {
+      transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    }
+    50% {
+      transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    }
+    100% {
+      transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    }
+  }
+}
