@@ -14,7 +14,7 @@ In this project we have used the `MeaningCloud's` text classification API. The d
 
 ## Getting started
 
-All dependencies for this project to run are already present in the `package.json` file. For this project to run properly you'll have to provide a `MeaningCloud` API key, Refer (this)[#setup_meaningcloud_api_key]. Once you clone this repo, you will have to install everything:
+All dependencies for this project to run are already present in the `package.json` file. For this project to run properly you'll have to provide a `MeaningCloud` API key, Refer (here)[#setup-meaningcloud-api-key]. Once you clone this repo, you will have to install everything:
 
 `cd` into your new folder and run:
 
