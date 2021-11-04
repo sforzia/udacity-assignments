@@ -57,7 +57,6 @@ app.get("/getMeaningCloudData", (req, res) => {
         },
       } = response;
       let responseObject = {};
-      console.log("status: ", code, msg, remaining_credits);
       if (code != 0) {
         const message = `${msg} ${meaningCloudAPIResponseMap[code]}`;
         responseObject = { error: message };
@@ -68,7 +67,6 @@ app.get("/getMeaningCloudData", (req, res) => {
           remainingCredits: remaining_credits,
         };
       }
-      console.log("responseObject: ", responseObject);
       res.send(responseObject);
     })
     .catch((error) => {
