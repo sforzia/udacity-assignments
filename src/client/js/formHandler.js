@@ -19,26 +19,6 @@ function handleSubmit(event) {
           "results"
         ).innerHTML = `<p><strong>Error:</strong> ${res.error}</p>`;
       } else {
-        let responseList = !res.list.length
-          ? "<p class='no-results'>No results found.</p>"
-          : "<table><thead>" +
-            `<tr class='item header'>
-          <th><span>Code</span></th>
-          <th><span>Relevance</span></th>
-          <th><span>Absolute Relevance</span></th>
-          <th><span>Label</span></th>
-            </tr></thead><tbody>` +
-            res.list
-              .map((item) => {
-                return `<tr class='item'>
-            <td><span>${item.code}</span></td>
-            <td><span>${item.relevance}</span></td>
-            <td><span>${item.abs_relevance}</span></td>
-            <td><span>${item.label}</span></td>
-          </tr>`;
-              })
-              .join("") +
-            "</tbody></table>";
         const resultsInnerHTML = updateUI(res);
         document.getElementById("results").innerHTML = resultsInnerHTML;
       }

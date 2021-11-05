@@ -8,10 +8,13 @@ section form {
 
 form input[type="text"] {
   flex: 2;
+  width: 100%;
 }
 
 form button {
   flex: 1;
+  flex-grow: 0;
+  padding: 5px 50px;
   margin-left: 2px;
 
   &:not(:disabled) {
@@ -19,10 +22,8 @@ form button {
   }
 }
 
-button,
 input {
   padding: 5px 20px;
-  width: 100%;
   line-height: 16px;
   // margin: 10px 0;
 }
