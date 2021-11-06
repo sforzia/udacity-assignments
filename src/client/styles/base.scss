@@ -1,0 +1,54 @@
+html body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 12px;
+  padding-bottom: 0;
+}
+
+main {
+  flex: 2;
+}
+
+section {
+  //   max-width: 800px;
+  margin: 50px auto;
+
+  h1 {
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+
+  #results {
+    &.error {
+      color: red;
+    }
+    strong {
+      font-weight: 600;
+    }
+
+    .input-query {
+      margin-bottom: 8px;
+    }
+
+    table {
+      thead,
+      tbody {
+        th,
+        td {
+          padding: 8px;
+          text-align: start;
+          font-weight: revert;
+          span {
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+
+  .no-results {
+    text-align: center;
+  }
+}
