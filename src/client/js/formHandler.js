@@ -1,3 +1,5 @@
+const axios = require("axios");
+
 function handleSubmit(event) {
   event.preventDefault();
   event.stopPropagation();
@@ -59,4 +61,15 @@ function onKeydown(event) {
   }
 }
 
-export { handleSubmit, onKeydown };
+// const checkServerResponse = async () => {
+//   return await fetch(`http://localhost:8081/test`)
+//     .then((response) => response.json())
+//     .then((data) => data);
+// };
+
+async function getFirstAlbumTitle() {
+  const response = await axios("http://localhost:8081/test");
+  return response.data;
+}
+
+export { handleSubmit, onKeydown, getFirstAlbumTitle };
