@@ -20,6 +20,11 @@ All dependencies for this project to run are already present in the `package.jso
 
 - `npm install`
 
+and then run the express server by running `npm start`, the server is configured to run on port number `8081`.
+
+- `npm run build-dev` command will be used to run the webpack dev server, which will automatically reflect the changes once saved.
+- `npm run build-prod` command will be used to create an optimised build for production use.
+
 ### Setup MeaningCloud API key
 
 Next we need to include our API keys for this project to run:
