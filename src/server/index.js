@@ -23,7 +23,7 @@ const meaningCloudAPIResponseMap = {
 
 const app = express();
 const MEANING_CLOUD_API_KEY = process.env.MEANING_CLOUD_API_KEY;
-const BASE_URL = `https://api.meaningcloud.com/class-2.0?key=${MEANING_CLOUD_API_KEY}&model=IPTC_en&txt=`;
+const BASE_URL = `https://api.meaningcloud.com/class-2.0?key=${MEANING_CLOUD_API_KEY}&model=IPTC_en&url=`;
 
 app.use(express.static("dist"));
 app.use(bodyParser.urlencoded({ extended: false }));
