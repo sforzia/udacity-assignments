@@ -1,0 +1,237 @@
+body {
+  background: #fffff8;
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#app {
+  top: 20px;
+  left: 50%;
+  width: 320px;
+  padding: 12px;
+  font-size: 20px;
+  min-height: 430px;
+  border-radius: 8px;
+  position: absolute;
+  background: #f23557;
+  box-sizing: border-box;
+  transform: translateX(-50%);
+  font-family: "Oswald", sans-serif;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.headline h1 {
+  margin: 0;
+  font-size: 24px;
+  text-align: center;
+}
+
+.holder.zip,
+.holder.feel,
+.holder.entry {
+  margin-top: 12px;
+}
+
+.zip label {
+  font-size: 18px;
+}
+
+.holder.zip {
+  form {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    align-items: center;
+    input#zip {
+      width: 100%;
+    }
+
+    * {
+      margin-bottom: 8px;
+    }
+    // div {
+    //   margin-top: 8px;
+    // }
+
+    .date-wrapper {
+      display: flex;
+      align-items: center;
+      align-self: flex-start;
+      label {
+        margin-right: 4px;
+      }
+    }
+  }
+}
+
+.entry {
+  /* background: rgba(59, 74, 107, 0.4); */
+  width: 95%;
+  text-align: center;
+}
+
+#entryHolder {
+  padding: 4px;
+  border-radius: 4px;
+  box-sizing: border-box;
+  border: 1px solid yellow;
+
+  visibility: hidden;
+}
+
+#date {
+}
+
+#temp {
+  font-size: 36px;
+}
+
+#content {
+  color: white;
+}
+
+.headline {
+}
+
+.title {
+  color: white;
+}
+
+/*  Basic Styling To Override Default For Basic HTML Elements */
+label {
+  display: block;
+  font-size: 27px;
+}
+
+input {
+  padding: 6px 8px;
+  display: block;
+  background: #22b2da;
+  color: #f0d43a;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  border: none;
+
+  &#feelings {
+    width: 220px;
+    line-break: anywhere;
+  }
+}
+
+button {
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 6px 8px;
+  color: #f0d43a;
+  background: #3b4a6b;
+  font-family: "Oswald", sans-serif;
+
+  &:hover {
+    box-shadow: 0 0 1px 1px gray;
+  }
+
+  &#formsubmitbtn {
+    border-radius: 4px;
+  }
+}
+
+h1 {
+  font-size: 36px;
+}
+
+textarea {
+  background: #22b2da;
+  color: #f0d43a;
+  font-size: 20px;
+  font-family: "Oswald", sans-serif;
+  resize: none;
+}
+/* Reset style for HTML element on active to have no border*/
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+/* Style for Placeholder Text*/
+::placeholder {
+  /* Firefox, Chrome, Opera */
+  color: #f0d43a;
+  font-family: "Oswald", sans-serif;
+}
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #f0d43a;
+  font-family: "Oswald", sans-serif;
+}
+
+::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #f0d43a;
+  font-family: "Oswald", sans-serif;
+}
+
+#zip-info-highlighter {
+  font-size: 11px;
+  background: white;
+  color: black;
+  padding: 2px 4px;
+  font-weight: 600;
+  transition: all 0.5s;
+  display: inline-block;
+  width: 270px;
+}
+
+.overlay {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.6);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  visibility: hidden;
+
+  .message-area {
+    width: 80%;
+    padding: 4px;
+    font-size: 18px;
+    text-align: center;
+    border-radius: 4px;
+    background-color: white;
+
+    button {
+      border-radius: 4px;
+    }
+  }
+}
+
+.date {
+  .date-input {
+    margin: 0 4px;
+    input {
+      width: 20px;
+      padding: 4px;
+      text-align: center;
+      caret-color: transparent;
+    }
+
+    &.yyyy-wrapper {
+      input {
+        width: 40px;
+      }
+    }
+  }
+}

@@ -1,5 +1,67 @@
 const axios = require("axios");
 
+const init = () => {
+  submitButtonListener();
+  inputDateInitializer();
+  const numericInputsOnly = document.querySelectorAll(".date-input input");
+  numericInputsOnly.forEach((input) => {
+    input.addEventListener("keypress", (e) => {
+      if (e.which < 48 || e.which > 57) {
+        e.preventDefault();
+      }
+    });
+  });
+};
+
+const submitButtonListener = () => {
+  const formSubmitButton = document.querySelector("#formsubmitbtn");
+  if (formSubmitButton) {
+    formSubmitButton.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      const date = document.querySelector("#journey-date");
+      const cityName = document.querySelector("#zip");
+      let flag = false;
+      if (isNaN(new Date(date.value))) {
+        flag = true;
+      } else if (!cityName.value || !cityName.value.trim()) {
+        flag = true;
+      }
+      if (flag) {
+        // inform user about missing/incorrect input/parameters.
+      } else {
+        // make the api call, freeze the button and input elements.
+        const getCoordinatesUrl = `http://localhost:8081/getCoordinates?travellingto=${cityName.value.trim()}`;
+        fetch(getCoordinatesUrl)
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("Response from server: ", data);
+          });
+      }
+    });
+  }
+};
+
+const inputDateInitializer = () => {
+  const date = document.querySelector("#journey-date");
+  const today = new Date().toLocaleDateString().split("/");
+  date.min = `${today[2]}-${matchDigits(today[0])}-${matchDigits(today[1])}`;
+  date.value = `${today[2]}-${matchDigits(today[0])}-${matchDigits(today[1])}`;
+  date.max = `${+today[2] + 2}-${matchDigits(today[0])}-${matchDigits(
+    today[1]
+  )}`;
+  date.addEventListener("change", (e) => {
+    console.log(
+      "ochange called: ",
+      e.target.value,
+      e.target.valueAsNumber,
+      isNaN(Date.parse(e.target.value))
+    );
+  });
+};
+
+const matchDigits = (number) => (number.length == 1 ? "0" + number : number);
+
 function handleSubmit(event) {
   event.preventDefault();
   event.stopPropagation();
@@ -72,4 +134,4 @@ async function getFirstAlbumTitle() {
   return response.data;
 }
 
-export { handleSubmit, onKeydown, getFirstAlbumTitle };
+export { handleSubmit, onKeydown, getFirstAlbumTitle, init };
