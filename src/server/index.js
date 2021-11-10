@@ -12,7 +12,7 @@ const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
 const GEONAMES_USERNAME = process.env.GEONAMES_USERNAME;
 const WEATHERBIT_API_KEY = process.env.WEATHERBIT_API_KEY;
 const geonamesApi = `http://api.geonames.org/searchJSON?username=${GEONAMES_USERNAME}&maxRows=10&q=`;
-const pixabayApi = `https://pixabay.com/api?key=${PIXABAY_API_KEY}&image_type=photo&safesearch=true`;
+const pixabayApi = `https://pixabay.com/api?key=${PIXABAY_API_KEY}&image_type=photo&safesearch=true&q=`;
 const weatherbitApiDayForecast = `https://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHERBIT_API_KEY}`;
 const weatherbitApiHourForecast = `https://api.weatherbit.io/v2.0/forecast/hourly?key=${WEATHERBIT_API_KEY}`;
 
@@ -27,7 +27,7 @@ app.get("/", function (req, res) {
 });
 
 app.listen(EXPRESS_SERVER_PORT, function () {
-  console.log(`Example app listening on port ${EXPRESS_SERVER_PORT}!`);
+  console.log(`Travel app is listening on port ${EXPRESS_SERVER_PORT}!`);
 });
 
 app.get("/test", function (req, res) {
@@ -35,9 +35,9 @@ app.get("/test", function (req, res) {
 });
 
 app.get("/getCoordinates", (req, res) => {
-  const { travellingto } = req.query;
-  console.log("travellingto: ", travellingto);
-  axios(`${geonamesApi}${travellingto}`).then((response) => {
+  const { loc, date } = req.query;
+  console.log("loc, date: ", loc, date, new Date(+date));
+  axios(`${geonamesApi}${loc}`).then((response) => {
     const {
       data: { geonames, totalResultsCount },
     } = response;
@@ -46,11 +46,19 @@ app.get("/getCoordinates", (req, res) => {
       if (geonames && geonames.length) {
         // pick first element and return its `lat` and `lng`.
         const [{ lat, lng, countryName }] = geonames;
-        res.send({
-          lat,
-          lng,
-          country: countryName,
-        });
+        axios(`${weatherbitApiDayForecast}&lat=${lat}&lon=${lng}`).then(
+          (response) => {
+            // console.log("weatherbit api response: ", response.data);
+            axios(`${pixabayApi}${loc}`).then((response) => {
+              // console.log("pixabay api response: ", response.data);
+              res.send({
+                lat,
+                lng,
+                country: countryName,
+              });
+            });
+          }
+        );
       } else {
         // inform user that geolocations array is empty.
         res.send({
@@ -64,9 +72,9 @@ app.get("/getCoordinates", (req, res) => {
         error: "No geolocation found for the enter destination.",
       });
     }
-    console.log("response: ", response.data);
+    // console.log("response: ", response.data);
   });
   // res.send({
-  //   travellingto,
+  //   loc,
   // });
 });

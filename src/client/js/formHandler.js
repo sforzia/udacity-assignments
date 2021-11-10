@@ -31,7 +31,9 @@ const submitButtonListener = () => {
         // inform user about missing/incorrect input/parameters.
       } else {
         // make the api call, freeze the button and input elements.
-        const getCoordinatesUrl = `http://localhost:8081/getCoordinates?travellingto=${cityName.value.trim()}`;
+        const loc = cityName.value.trim();
+        const dateValue = date.valueAsNumber;
+        const getCoordinatesUrl = `http://localhost:8081/getCoordinates?loc=${loc}&date=${dateValue}`;
         fetch(getCoordinatesUrl)
           .then((response) => response.json())
           .then((data) => {
