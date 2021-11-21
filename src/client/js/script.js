@@ -125,15 +125,4 @@ function onKeydown(event) {
   }
 }
 
-// const checkServerResponse = async () => {
-//   return await fetch(`http://localhost:8081/test`)
-//     .then((response) => response.json())
-//     .then((data) => data);
-// };
-
-async function getFirstAlbumTitle() {
-  const response = await axios("http://localhost:8081/test");
-  return response.data;
-}
-
-export { handleSubmit, onKeydown, getFirstAlbumTitle, init };
+export { handleSubmit, onKeydown, init };
