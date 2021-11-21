@@ -10,9 +10,10 @@ const EXPRESS_SERVER_PORT = 8081;
 const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
 const GEONAMES_USERNAME = process.env.GEONAMES_USERNAME;
 const WEATHERBIT_API_KEY = process.env.WEATHERBIT_API_KEY;
+
+const weatherbitApiCurrent = `https://api.weatherbit.io/v2.0/current?key=${WEATHERBIT_API_KEY}`;
 const geonamesApi = `http://api.geonames.org/searchJSON?username=${GEONAMES_USERNAME}&maxRows=10&q=`;
 const pixabayApi = `https://pixabay.com/api?key=${PIXABAY_API_KEY}&image_type=photo&safesearch=true&q=`;
-const weatherbitApiCurrent = `https://api.weatherbit.io/v2.0/current?key=${WEATHERBIT_API_KEY}`;
 const weatherbitApiForecast = `https://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHERBIT_API_KEY}`;
 
 const app = express();
@@ -81,7 +82,7 @@ app.get("/getCoordinates", (req, res) => {
     } else {
       // no geolocation found
       res.send({
-        error: "No geolocation found for the enter destination.",
+        error: "No geolocation data found for the entered destination.",
       });
     }
   });
