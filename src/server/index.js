@@ -31,59 +31,87 @@ app.listen(EXPRESS_SERVER_PORT, function () {
 });
 
 app.get("/getCoordinates", (req, res) => {
+  // reading location and date from query params.
   const { loc, date } = req.query;
   const travelDate = new Date(+date);
+  // creating a currentDate to store the current date of the server and compare it with the user entered date.
   const currentDate = new Date();
   const _travelDate = travelDate.getDate();
   const _currentDate = currentDate.getDate();
   const check = Math.abs(_travelDate - _currentDate);
   const travellingWithinCurrentWeek = check < 7;
+  // deciding which API to call depending upon thr trip date.
   const weatherbitApi = travellingWithinCurrentWeek
     ? weatherbitApiCurrent
     : weatherbitApiForecast;
-  axios(`${geonamesApi}${loc}`).then((geonamesResponse) => {
-    const {
-      data: { geonames, totalResultsCount },
-    } = geonamesResponse;
-    if (totalResultsCount) {
-      // geolocation found
-      if (geonames && geonames.length) {
-        // pick first element and return its `lat` and `lng`.
-        const [{ lat, lng, countryName }] = geonames;
-        axios(`${weatherbitApi}&lat=${lat}&lon=${lng}`).then((weather) => {
-          axios(`${pixabayApi}${loc}`).then((pixibay) => {
-            let pixibayResponse = null;
-            if (
-              pixibay &&
-              pixibay.data &&
-              pixibay.data.hits &&
-              Array.isArray(pixibay.data.hits) &&
-              pixibay.data.hits.length
-            ) {
-              pixibayResponse = pixibay.data.hits[0];
-            }
-            res.send({
-              lat,
-              lng,
-              country: countryName,
-              pixibay: pixibayResponse,
-              weather: weather.data.data,
-              forecast: !travellingWithinCurrentWeek,
+  // fetching the latitute and longitude for the entered location.
+  axios(`${geonamesApi}${loc}`)
+    .then((geonamesResponse) => {
+      const {
+        data: { geonames, totalResultsCount },
+      } = geonamesResponse;
+      if (totalResultsCount) {
+        // geolocation found
+        if (geonames && geonames.length) {
+          // pick first element and destructuring its `lat` and `lng` and `countryName`.
+          const [{ lat, lng, countryName }] = geonames;
+          axios(`${weatherbitApi}&lat=${lat}&lon=${lng}`).then((weather) => {
+            axios(`${pixabayApi}${loc}`).then((pixibayResponse) => {
+              let pixibay = null;
+              let weather = null;
+              if (
+                pixibayResponse &&
+                pixibayResponse.data &&
+                pixibayResponse.data.hits &&
+                Array.isArray(pixibayResponse.data.hits) &&
+                pixibayResponse.data.hits.length
+              ) {
+                const {
+                  id,
+                  tags,
+                  webformatURL,
+                  webformatWidth,
+                  webformatHeight,
+                } = pixibayResponse.data.hits[0];
+                pixibay = {
+                  id,
+                  tags,
+                  img: webformatURL,
+                  imgWidth: webformatWidth,
+                  imgHeight: webformatHeight,
+                };
+              }
+              if (travellingWithinCurrentWeek) {
+              }
+              res.send({
+                lat,
+                lng,
+                pixibay,
+                tripDate: date,
+                destination: loc,
+                country: countryName,
+                weather: weather.data.data,
+                forecast: !travellingWithinCurrentWeek,
+              });
             });
           });
-        });
+        } else {
+          // inform user that geolocations array is empty.
+          res.send({
+            error:
+              "Unable to geolocate the entered location, please re-enter your destination.",
+          });
+        }
       } else {
-        // inform user that geolocations array is empty.
+        // no geolocation found
         res.send({
-          error:
-            "Unable to geolocate the entered location, please re-enter your destination.",
+          error: "No geolocation data found for the entered destination.",
         });
       }
-    } else {
-      // no geolocation found
+    })
+    .catch((error) => {
       res.send({
-        error: "No geolocation data found for the entered destination.",
+        error: "Server error, please try again.",
       });
-    }
-  });
+    });
 });

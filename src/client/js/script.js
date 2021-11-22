@@ -3,14 +3,23 @@ const axios = require("axios");
 const init = () => {
   submitButtonListener();
   inputDateInitializer();
-  const numericInputsOnly = document.querySelectorAll(".date-input input");
-  numericInputsOnly.forEach((input) => {
-    input.addEventListener("keypress", (e) => {
-      if (e.which < 48 || e.which > 57) {
-        e.preventDefault();
-      }
+  handleOverlayCloseButton();
+  renderTripsOnInit();
+};
+
+const renderTripsOnInit = () => {
+  console.log(localStorage.getItem("trips"));
+};
+
+const handleOverlayCloseButton = () => {
+  const overlay = document.querySelector(".overlay");
+  if (overlay) {
+    const overlayCloseButton = overlay.querySelector("#close-overlay");
+    overlayCloseButton.addEventListener("click", (e) => {
+      overlay.style.visibility = "hidden";
+      document.querySelector("input:not(:disabled)").focus();
     });
-  });
+  }
 };
 
 const submitButtonListener = () => {
@@ -31,12 +40,37 @@ const submitButtonListener = () => {
         // inform user about missing/incorrect input/parameters.
       } else {
         // make the api call, freeze the button and input elements.
+        date.disabled = true;
+        cityName.disabled = true;
+        formSubmitButton.disabled = true;
         const loc = cityName.value.trim();
         const dateValue = date.valueAsNumber;
         const getCoordinatesUrl = `http://localhost:8081/getCoordinates?loc=${loc}&date=${dateValue}`;
         fetch(getCoordinatesUrl)
           .then((response) => response.json())
           .then((data) => {
+            date.disabled = false;
+            cityName.disabled = false;
+            formSubmitButton.disabled = false;
+            if (data.error) {
+              const overlay = document.querySelector(".overlay");
+              if (overlay) {
+                overlay.querySelector("#message").innerHTML = data.error;
+                overlay.style.visibility = "visible";
+                overlay.querySelector("#close-overlay").focus();
+              }
+            } else {
+              let trips = localStorage.getItem("trips");
+              if (trips) {
+                trips = JSON.parse(trips);
+              } else {
+                trips = [];
+              }
+              trips.unshift({
+                ...data,
+              });
+              localStorage.setItem("trips", JSON.stringify(trips));
+            }
             console.log("Response from server: ", data);
           });
       }
