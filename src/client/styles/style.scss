@@ -9,6 +9,7 @@ body {
   top: 20px;
   left: 50%;
   width: 320px;
+  width: 100%;
   padding: 12px;
   font-size: 20px;
   min-height: 430px;
@@ -21,6 +22,7 @@ body {
 
   display: flex;
   align-items: center;
+  align-items: flex-start;
   flex-direction: column;
   justify-content: flex-start;
 }
@@ -48,7 +50,7 @@ body {
     flex-direction: column;
     align-items: center;
     input#zip {
-      width: 100%;
+      width: calc(100% - 16px);
     }
 
     * {
@@ -241,6 +243,25 @@ button:focus {
     &.yyyy-wrapper {
       input {
         width: 40px;
+      }
+    }
+  }
+}
+
+#trips {
+  #trips-container {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    .trip {
+      position: relative;
+      p {
+        margin: 0;
+        // color: antiquewhite;
+        span {
+          // color: black;
+        }
       }
     }
   }

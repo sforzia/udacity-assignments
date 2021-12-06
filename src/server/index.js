@@ -55,46 +55,81 @@ app.get("/getCoordinates", (req, res) => {
         if (geonames && geonames.length) {
           // pick first element and destructuring its `lat` and `lng` and `countryName`.
           const [{ lat, lng, countryName }] = geonames;
-          axios(`${weatherbitApi}&lat=${lat}&lon=${lng}`).then((weather) => {
-            axios(`${pixabayApi}${loc}`).then((pixibayResponse) => {
-              let pixibay = null;
-              let weather = null;
-              if (
-                pixibayResponse &&
-                pixibayResponse.data &&
-                pixibayResponse.data.hits &&
-                Array.isArray(pixibayResponse.data.hits) &&
-                pixibayResponse.data.hits.length
-              ) {
-                const {
-                  id,
-                  tags,
-                  webformatURL,
-                  webformatWidth,
-                  webformatHeight,
-                } = pixibayResponse.data.hits[0];
-                pixibay = {
-                  id,
-                  tags,
-                  img: webformatURL,
-                  imgWidth: webformatWidth,
-                  imgHeight: webformatHeight,
-                };
-              }
-              if (travellingWithinCurrentWeek) {
-              }
-              res.send({
-                lat,
-                lng,
-                pixibay,
-                tripDate: date,
-                destination: loc,
-                country: countryName,
-                weather: weather.data.data,
-                forecast: !travellingWithinCurrentWeek,
+          axios(`${weatherbitApi}&lat=${lat}&lon=${lng}`).then(
+            (weatherResponse) => {
+              axios(`${pixabayApi}${loc}`).then((pixibayResponse) => {
+                let pixibay = null;
+                let weather = [];
+                if (
+                  pixibayResponse &&
+                  pixibayResponse.data &&
+                  pixibayResponse.data.hits &&
+                  Array.isArray(pixibayResponse.data.hits) &&
+                  pixibayResponse.data.hits.length
+                ) {
+                  const [
+                    { id, tags, webformatURL, webformatWidth, webformatHeight },
+                  ] = pixibayResponse.data.hits;
+                  pixibay = {
+                    id,
+                    tags,
+                    img: webformatURL,
+                    imgWidth: webformatWidth,
+                    imgHeight: webformatHeight,
+                  };
+                }
+                console.log("weatherResponse: ", weatherResponse.data);
+                if (
+                  weatherResponse &&
+                  weatherResponse.data &&
+                  weatherResponse.data.data &&
+                  Array.isArray(weatherResponse.data.data)
+                ) {
+                  for (
+                    let i = 0;
+                    i < weatherResponse.data.data.length && i < 7;
+                    i++
+                  ) {
+                    const obj = weatherResponse.data.data[i];
+                    console.log("here inside loop[obj]: ", obj);
+                    const {
+                      vis,
+                      temp,
+                      sunset,
+                      sunrise,
+                      min_temp,
+                      max_temp,
+                      datetime,
+                      sunset_ts,
+                      sunrise_ts,
+                      weather: _weather,
+                    } = obj;
+                    weather.push({
+                      vis,
+                      temp,
+                      sunset,
+                      sunrise,
+                      min_temp,
+                      max_temp,
+                      datetime,
+                      sunset_ts,
+                      sunrise_ts,
+                      weather: _weather,
+                    });
+                  }
+                }
+                res.send({
+                  lat,
+                  lng,
+                  pixibay,
+                  tripDate: date,
+                  weather: weather,
+                  destination: loc,
+                  country: countryName,
+                });
               });
-            });
-          });
+            }
+          );
         } else {
           // inform user that geolocations array is empty.
           res.send({

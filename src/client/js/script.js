@@ -1,5 +1,11 @@
 const axios = require("axios");
 
+const dateFormatter = {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+};
+
 const init = () => {
   submitButtonListener();
   inputDateInitializer();
@@ -8,7 +14,19 @@ const init = () => {
 };
 
 const renderTripsOnInit = () => {
-  console.log(localStorage.getItem("trips"));
+  const trips = localStorage.getItem("trips");
+  if (trips) {
+    const parsedTrips = JSON.parse(trips);
+    if (parsedTrips && Array.isArray(parsedTrips)) {
+      const fragment = document.createDocumentFragment();
+      console.log(JSON.parse(trips));
+      for (let trip of parsedTrips) {
+        fragment.appendChild(createTripLayoutFragment(trip));
+      }
+      const tripsElem = document.querySelector("#trips-container");
+      tripsElem.appendChild(fragment);
+    }
+  }
 };
 
 const handleOverlayCloseButton = () => {
@@ -61,14 +79,17 @@ const submitButtonListener = () => {
               }
             } else {
               let trips = localStorage.getItem("trips");
-              if (trips) {
+              if (trips && JSON.parse(trips)) {
                 trips = JSON.parse(trips);
               } else {
                 trips = [];
               }
               trips.unshift({
                 ...data,
+                id: `trip${new Date().getTime()}`,
               });
+              const tripsElem = document.querySelector("#trips-container");
+              tripsElem.prepend(createTripLayoutFragment(data));
               localStorage.setItem("trips", JSON.stringify(trips));
             }
             console.log("Response from server: ", data);
@@ -86,14 +107,6 @@ const inputDateInitializer = () => {
   date.max = `${+today[2] + 2}-${matchDigits(today[0])}-${matchDigits(
     today[1]
   )}`;
-  date.addEventListener("change", (e) => {
-    console.log(
-      "ochange called: ",
-      e.target.value,
-      e.target.valueAsNumber,
-      isNaN(Date.parse(e.target.value))
-    );
-  });
 };
 
 const matchDigits = (number) => (number.length == 1 ? "0" + number : number);
@@ -125,28 +138,25 @@ function handleSubmit(event) {
     });
 }
 
-const updateUI = (data) => {
-  let responseList = !data.list.length
-    ? "<p class='no-results'>No results found.</p>"
-    : "<table><thead>" +
-      `<tr class='item header'>
-  <th><span>Code</span></th>
-  <th><span>Relevance</span></th>
-  <th><span>Absolute Relevance</span></th>
-  <th><span>Label</span></th>
-    </tr></thead><tbody>` +
-      data.list
-        .map((item) => {
-          return `<tr class='item'>
-    <td><span>${item.code}</span></td>
-    <td><span>${item.relevance}</span></td>
-    <td><span>${item.abs_relevance}</span></td>
-    <td><span>${item.label}</span></td>
-  </tr>`;
-        })
-        .join("") +
-      "</tbody></table>";
-  return `<p class='input-query'><strong>Query string:</strong> ${data.searchQuery}</p><div class='items'>${responseList}</div>`;
+const createTripLayoutFragment = (trip) => {
+  const fragment = document.createDocumentFragment();
+  const tripContainer = document.createElement("div");
+  const removeButton = document.createElement("button");
+  removeButton.addEventListener("click", removeTripListener);
+  removeButton.dataset.id = trip.id;
+  removeButton.innerHTML = "Remove";
+  tripContainer.className = "trip";
+  tripContainer.id = trip.id;
+  const tripDestination = document.createElement("p");
+  const destinationSpan = `<span class='destination'>${trip.destination}</span>`;
+  const dateSpan = `<span class='date'>${new Date(
+    +trip.tripDate
+  ).toLocaleDateString("en-US", dateFormatter)}</span>`;
+  tripDestination.innerHTML = `${destinationSpan} - ${dateSpan}`;
+  tripContainer.appendChild(tripDestination);
+  tripContainer.appendChild(removeButton);
+  fragment.appendChild(tripContainer);
+  return fragment;
 };
 
 function onKeydown(event) {
@@ -158,5 +168,22 @@ function onKeydown(event) {
     }
   }
 }
+
+const removeTrip = (id) => {
+  const trips = localStorage.getItem("trips");
+  if (id && trips && JSON.parse(trips)) {
+    const parsedTrips = JSON.parse(trips);
+    const remainingTrips = parsedTrips.filter((trip) => trip.id !== id);
+    const tripToBeRemove = document.querySelector(`#${id}`);
+    if (tripToBeRemove) {
+      tripToBeRemove.remove();
+    }
+    localStorage.setItem("trips", JSON.stringify(remainingTrips));
+  }
+};
+
+const removeTripListener = (e) => {
+  removeTrip(e.target.dataset.id);
+};
 
 export { handleSubmit, onKeydown, init };
