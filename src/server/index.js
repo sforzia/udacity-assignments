@@ -55,43 +55,43 @@ app.get("/getCoordinates", (req, res) => {
         if (geonames && geonames.length) {
           // pick first element and destructuring its `lat` and `lng` and `countryName`.
           const [{ lat, lng, countryName }] = geonames;
-          axios(`${weatherbitApi}&lat=${lat}&lon=${lng}`).then(
-            (weatherResponse) => {
-              axios(`${pixabayApi}${loc}`).then((pixibayResponse) => {
-                let pixibay = null;
-                let weather = [];
-                if (
-                  pixibayResponse &&
-                  pixibayResponse.data &&
-                  pixibayResponse.data.hits &&
-                  Array.isArray(pixibayResponse.data.hits) &&
-                  pixibayResponse.data.hits.length
-                ) {
-                  const [
-                    { id, tags, webformatURL, webformatWidth, webformatHeight },
-                  ] = pixibayResponse.data.hits;
-                  pixibay = {
-                    id,
-                    tags,
-                    img: webformatURL,
-                    imgWidth: webformatWidth,
-                    imgHeight: webformatHeight,
-                  };
-                }
-                console.log("weatherResponse: ", weatherResponse.data);
-                if (
-                  weatherResponse &&
-                  weatherResponse.data &&
-                  weatherResponse.data.data &&
-                  Array.isArray(weatherResponse.data.data)
-                ) {
-                  for (
-                    let i = 0;
-                    i < weatherResponse.data.data.length && i < 7;
-                    i++
+          axios(`${weatherbitApi}&lat=${lat}&lon=${lng}`)
+            .then((weatherResponse) => {
+              axios(`${pixabayApi}${loc}`)
+                .then((pixibayResponse) => {
+                  let pixibay = null;
+                  let weather = [];
+                  if (
+                    pixibayResponse &&
+                    pixibayResponse.data &&
+                    pixibayResponse.data.hits &&
+                    Array.isArray(pixibayResponse.data.hits) &&
+                    pixibayResponse.data.hits.length
                   ) {
-                    const obj = weatherResponse.data.data[i];
-                    console.log("here inside loop[obj]: ", obj);
+                    const [
+                      {
+                        id,
+                        tags,
+                        webformatURL,
+                        webformatWidth,
+                        webformatHeight,
+                      },
+                    ] = pixibayResponse.data.hits;
+                    pixibay = {
+                      id,
+                      tags,
+                      img: webformatURL,
+                      imgWidth: webformatWidth,
+                      imgHeight: webformatHeight,
+                    };
+                  }
+                  if (
+                    weatherResponse &&
+                    weatherResponse.data &&
+                    weatherResponse.data.data &&
+                    Array.isArray(weatherResponse.data.data)
+                  ) {
+                    const obj = weatherResponse.data.data[0];
                     const {
                       vis,
                       temp,
@@ -103,33 +103,40 @@ app.get("/getCoordinates", (req, res) => {
                       sunset_ts,
                       sunrise_ts,
                       weather: _weather,
-                    } = obj;
+                    } = weatherResponse.data.data[0];
                     weather.push({
-                      vis,
                       temp,
-                      sunset,
-                      sunrise,
                       min_temp,
                       max_temp,
                       datetime,
-                      sunset_ts,
-                      sunrise_ts,
                       weather: _weather,
                     });
                   }
-                }
-                res.send({
-                  lat,
-                  lng,
-                  pixibay,
-                  tripDate: date,
-                  weather: weather,
-                  destination: loc,
-                  country: countryName,
+                  res.send({
+                    lat,
+                    lng,
+                    pixibay,
+                    tripDate: date,
+                    weather: weather,
+                    destination: loc,
+                    country: countryName,
+                  });
+                })
+                .catch((error) => {
+                  res.send({
+                    error:
+                      "Pixabay " +
+                      (error?.response?.data?.error || "Server error"),
+                  });
                 });
+            })
+            .catch((error) => {
+              res.send({
+                error:
+                  "Weatherbit " +
+                  (error?.response?.data?.error || "Server error"),
               });
-            }
-          );
+            });
         } else {
           // inform user that geolocations array is empty.
           res.send({

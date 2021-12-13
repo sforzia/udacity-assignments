@@ -15,14 +15,14 @@ body {
   min-height: 430px;
   border-radius: 8px;
   position: absolute;
-  background: #f23557;
+  // background: #f23557;
   box-sizing: border-box;
   transform: translateX(-50%);
   font-family: "Oswald", sans-serif;
 
   display: flex;
   align-items: center;
-  align-items: flex-start;
+  // align-items: flex-start;
   flex-direction: column;
   justify-content: flex-start;
 }
@@ -97,7 +97,33 @@ body {
   color: white;
 }
 
+button {
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
 .headline {
+  display: flex;
+  align-items: center;
+  align-content: center;
+  flex-direction: revert;
+
+  button {
+    border: none;
+    margin-left: 8px;
+    font-weight: 600;
+    padding: 4px 8px;
+    border-radius: 2px;
+    background: lightgray;
+    border: 1px solid transparent;
+    box-shadow: 0 0 2px 1px gray;
+
+    &:hover {
+      box-shadow: 0 0 0 3px blue;
+      outline: none;
+    }
+  }
 }
 
 .title {
@@ -128,27 +154,28 @@ input {
     opacity: 0.8;
   }
 }
+form {
+  button {
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    padding: 6px 8px;
+    color: #f0d43a;
+    background: #3b4a6b;
+    font-family: "Oswald", sans-serif;
 
-button {
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  padding: 6px 8px;
-  color: #f0d43a;
-  background: #3b4a6b;
-  font-family: "Oswald", sans-serif;
+    &:not(:disabled):hover {
+      box-shadow: 0 0 1px 1px gray;
+    }
 
-  &:not(:disabled):hover {
-    box-shadow: 0 0 1px 1px gray;
-  }
+    &#formsubmitbtn {
+      border-radius: 4px;
+    }
 
-  &#formsubmitbtn {
-    border-radius: 4px;
-  }
-
-  &:disabled {
-    cursor: default;
-    opacity: 0.8;
+    &:disabled {
+      cursor: default;
+      opacity: 0.8;
+    }
   }
 }
 
@@ -258,33 +285,67 @@ button:focus {
     display: flex;
     flex-direction: column;
     .trip {
+      background: beige;
+      margin-bottom: 6px;
       position: relative;
       padding: 12px 24px;
+
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+
       p {
         margin: 0;
       }
-      .btn-remove-trip {
-        top: 0;
-        right: 0;
-        font-size: 16px;
-        padding: 2px 4px;
-        color: black;
-        border-radius: 2px;
-        position: absolute;
-        background: transparent;
-        background-color: rgba(0, 0, 0, 0.24);
 
-        span {
-          pointer-events: none;
-        }
-
-        &:focus,
-        &:hover {
-          background-color: rgba(0, 0, 0, 0.36);
-          border: none;
-          box-shadow: none;
+      .trip-location {
+        .destination-image {
+          width: 260px;
+          margin-right: 8px;
+          border-radius: 4px;
+          box-shadow: 0 0 1px 0 gray;
         }
       }
+    }
+  }
+}
+
+.btn-close-item {
+  top: 0;
+  right: 0;
+  border: none;
+  color: black;
+  font-size: 16px;
+  padding: 2px 4px;
+  border-radius: 2px;
+  position: absolute;
+  background: transparent;
+  span {
+    pointer-events: none;
+  }
+
+  &:focus,
+  &:hover {
+    border: none;
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.36);
+  }
+}
+
+.add-trip-overlay {
+  // display: none;
+  align-items: flex-start;
+  .holder {
+    padding: 16px;
+    border-radius: 2px;
+    background: white;
+
+    position: relative;
+
+    #closeAddTripOverlayBtn {
+      top: 0;
+      right: 0;
+      position: absolute;
     }
   }
 }

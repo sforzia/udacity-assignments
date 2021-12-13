@@ -11,6 +11,7 @@ const init = () => {
   inputDateInitializer();
   handleOverlayCloseButton();
   renderTripsOnInit();
+  handleAddTripButton();
 };
 
 const renderTripsOnInit = () => {
@@ -40,8 +41,38 @@ const handleOverlayCloseButton = () => {
   }
 };
 
+const handleAddTripButton = (e) => {
+  const addTripButton = document.querySelector("#addtripbutton");
+  const closeAddTripOverlayBtn = document.querySelector(
+    "#closeAddTripOverlayBtn"
+  );
+  if (addTripButton) {
+    addTripButton.addEventListener("click", addTrip);
+  }
+  if (closeAddTripOverlayBtn) {
+    closeAddTripOverlayBtn.addEventListener("click", addTrip);
+  }
+};
+
+const addTrip = () => {
+  const addTripOverlay = document.querySelector("#addTripOverlay");
+  if (addTripOverlay) {
+    const visibility = addTripOverlay.style.visibility;
+    addTripOverlay.style.visibility =
+      visibility == "visible" ? "hidden" : "visible";
+  }
+};
+
+const closeAddTripOverlay = (e) => {
+  const addTripOverlay = document.querySelector("#addTripOverlay");
+  if (addTripOverlay) {
+    addTripOverlay.style.visibility = "hidden";
+  }
+};
+
 const submitButtonListener = () => {
   const formSubmitButton = document.querySelector("#formsubmitbtn");
+  const addTripOverlay = document.querySelector("#addTripOverlay");
   if (formSubmitButton) {
     formSubmitButton.addEventListener("click", (e) => {
       e.preventDefault();
@@ -70,6 +101,9 @@ const submitButtonListener = () => {
             date.disabled = false;
             cityName.disabled = false;
             formSubmitButton.disabled = false;
+            if (addTripOverlay) {
+              addTripOverlay.style.visibility = "hidden";
+            }
             if (data.error) {
               const overlay = document.querySelector(".overlay");
               if (overlay) {
@@ -144,6 +178,10 @@ const createTripLayoutFragment = (trip) => {
   const tripContainer = document.createElement("div");
   const removeButton = document.createElement("button");
   const weatherContainer = document.createElement("div");
+  const tripDetailsContainer = document.createElement("div");
+  const tripLocationContainer = document.createElement("div");
+  tripLocationContainer.className = "trip-location";
+  tripDetailsContainer.className = "trip-details";
   weatherContainer.className = "weather-container";
   weatherTitle.className = "weather-title";
   weatherTitle.innerHTML =
@@ -153,18 +191,33 @@ const createTripLayoutFragment = (trip) => {
   removeButton.addEventListener("click", removeTripListener);
   removeButton.dataset.id = trip.id;
   removeButton.innerHTML = "<span>X</span>";
-  removeButton.className = "btn-remove-trip";
+  removeButton.className = "btn-close-item";
   tripContainer.className = "trip";
   tripContainer.id = trip.id;
   const tripDestination = document.createElement("p");
-  const destinationSpan = `<span class='destination'>${trip.destination}</span>`;
+  const tripDate = document.createElement("p");
+  const destinationSpan = `Destination: <span class='destination'>${trip.destination}, ${trip.country}</span>`;
   const dateSpan = `<span class='date'>${new Date(
     +trip.tripDate
   ).toLocaleDateString("en-US", dateFormatter)}</span>`;
-  tripDestination.innerHTML = `${destinationSpan} - ${dateSpan}`;
+  tripDate.innerHTML = `Departure: ${dateSpan}`;
+  tripDestination.innerHTML = `${destinationSpan}`;
+  let destinationImage = null;
+  if (trip.pixibay && trip.pixibay.img) {
+    destinationImage = document.createElement("img");
+    destinationImage.className = "destination-image";
+    destinationImage.src = trip.pixibay.img;
+    destinationImage.alt = `${trip.country} ${trip.destination} ${trip.pixibay.tags}`;
+  }
+  tripDetailsContainer.appendChild(tripDestination);
+  tripDetailsContainer.appendChild(tripDate);
+  tripDetailsContainer.appendChild(weatherContainer);
+  if (destinationImage) {
+    tripLocationContainer.appendChild(destinationImage);
+  }
   tripContainer.appendChild(removeButton);
-  tripContainer.appendChild(tripDestination);
-  tripContainer.appendChild(weatherContainer);
+  tripContainer.appendChild(tripLocationContainer);
+  tripContainer.appendChild(tripDetailsContainer);
   fragment.appendChild(tripContainer);
   return fragment;
 };
