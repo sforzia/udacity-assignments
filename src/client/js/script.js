@@ -140,11 +140,20 @@ function handleSubmit(event) {
 
 const createTripLayoutFragment = (trip) => {
   const fragment = document.createDocumentFragment();
+  const weatherTitle = document.createElement("p");
   const tripContainer = document.createElement("div");
   const removeButton = document.createElement("button");
+  const weatherContainer = document.createElement("div");
+  weatherContainer.className = "weather-container";
+  weatherTitle.className = "weather-title";
+  weatherTitle.innerHTML =
+    trip.weather.length == 1 ? "Current Weather" : "Weather Forecast";
+  weatherContainer.appendChild(weatherTitle);
+  weatherContainer.appendChild(createWeatherLayout(trip.weather));
   removeButton.addEventListener("click", removeTripListener);
   removeButton.dataset.id = trip.id;
-  removeButton.innerHTML = "Remove";
+  removeButton.innerHTML = "<span>X</span>";
+  removeButton.className = "btn-remove-trip";
   tripContainer.className = "trip";
   tripContainer.id = trip.id;
   const tripDestination = document.createElement("p");
@@ -153,10 +162,42 @@ const createTripLayoutFragment = (trip) => {
     +trip.tripDate
   ).toLocaleDateString("en-US", dateFormatter)}</span>`;
   tripDestination.innerHTML = `${destinationSpan} - ${dateSpan}`;
-  tripContainer.appendChild(tripDestination);
   tripContainer.appendChild(removeButton);
+  tripContainer.appendChild(tripDestination);
+  tripContainer.appendChild(weatherContainer);
   fragment.appendChild(tripContainer);
   return fragment;
+};
+
+const createWeatherLayout = (weather) => {
+  const div = document.createElement("div");
+  div.className = "weather-wrapper";
+  if (weather) {
+    if (weather.length) {
+      if (weather.length == 1) {
+      } else if (weather.length == 7) {
+      }
+      for (let item of weather) {
+        const inner = document.createElement("div");
+        inner.className = "weather";
+        for (let key in item) {
+          console.log("Key: ", key, item, item[key]);
+          const p = document.createElement("p");
+          p.className = key;
+          if (key == "vis") {
+            p.innerHTML = `Visibility: ${item[key]}`;
+          } else if (key == "temp") {
+            p.innerHTML = `Temperature: ${item[key]}`;
+          } else if (key == "weather") {
+            p.innerHTML = `Sky: ${item[key].description}`;
+          }
+          inner.appendChild(p);
+        }
+        div.appendChild(inner);
+      }
+    }
+  }
+  return div;
 };
 
 function onKeydown(event) {
@@ -173,7 +214,7 @@ const removeTrip = (id) => {
   const trips = localStorage.getItem("trips");
   if (id && trips && JSON.parse(trips)) {
     const parsedTrips = JSON.parse(trips);
-    const remainingTrips = parsedTrips.filter((trip) => trip.id !== id);
+    const remainingTrips = parsedTrips.filter((trip) => trip.id != id);
     const tripToBeRemove = document.querySelector(`#${id}`);
     if (tripToBeRemove) {
       tripToBeRemove.remove();

@@ -249,6 +249,9 @@ button:focus {
 }
 
 #trips {
+  p {
+    margin: 8px 0 0 0;
+  }
   #trips-container {
     position: relative;
 
@@ -256,11 +259,30 @@ button:focus {
     flex-direction: column;
     .trip {
       position: relative;
+      padding: 12px 24px;
       p {
         margin: 0;
-        // color: antiquewhite;
+      }
+      .btn-remove-trip {
+        top: 0;
+        right: 0;
+        font-size: 16px;
+        padding: 2px 4px;
+        color: black;
+        border-radius: 2px;
+        position: absolute;
+        background: transparent;
+        background-color: rgba(0, 0, 0, 0.24);
+
         span {
-          // color: black;
+          pointer-events: none;
+        }
+
+        &:focus,
+        &:hover {
+          background-color: rgba(0, 0, 0, 0.36);
+          border: none;
+          box-shadow: none;
         }
       }
     }
