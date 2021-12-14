@@ -47,26 +47,19 @@ const handleAddTripButton = (e) => {
     "#closeAddTripOverlayBtn"
   );
   if (addTripButton) {
-    addTripButton.addEventListener("click", addTrip);
+    addTripButton.addEventListener("click", toggleAddTrip);
   }
   if (closeAddTripOverlayBtn) {
-    closeAddTripOverlayBtn.addEventListener("click", addTrip);
+    closeAddTripOverlayBtn.addEventListener("click", toggleAddTrip);
   }
 };
 
-const addTrip = () => {
+const toggleAddTrip = () => {
   const addTripOverlay = document.querySelector("#addTripOverlay");
   if (addTripOverlay) {
     const visibility = addTripOverlay.style.visibility;
     addTripOverlay.style.visibility =
       visibility == "visible" ? "hidden" : "visible";
-  }
-};
-
-const closeAddTripOverlay = (e) => {
-  const addTripOverlay = document.querySelector("#addTripOverlay");
-  if (addTripOverlay) {
-    addTripOverlay.style.visibility = "hidden";
   }
 };
 
@@ -144,33 +137,6 @@ const inputDateInitializer = () => {
 };
 
 const matchDigits = (number) => (number.length == 1 ? "0" + number : number);
-
-function handleSubmit(event) {
-  event.preventDefault();
-  event.stopPropagation();
-  const results = document.getElementById("results");
-  let formText = document.getElementById("name").value;
-  if (!formText || !formText.trim()) {
-    results.classList.add("error");
-    results.innerHTML = "<p><strong>Error:</strong> Input cannot be empty</p>";
-    return;
-  }
-  results.classList.remove("error");
-  results.innerHTML = "<div class='box'><div class='loader'></div></div>";
-  fetch(`http://localhost:8081/getMeaningCloudData?input=${formText}`)
-    .then((res) => res.json())
-    .then(function (res) {
-      if (res.error) {
-        results.classList.add("error");
-        document.getElementById(
-          "results"
-        ).innerHTML = `<p><strong>Error:</strong> ${res.error}</p>`;
-      } else {
-        const resultsInnerHTML = updateUI(res);
-        document.getElementById("results").innerHTML = resultsInnerHTML;
-      }
-    });
-}
 
 const createTripLayoutFragment = (trip) => {
   const fragment = document.createDocumentFragment();
@@ -280,4 +246,4 @@ const removeTripListener = (e) => {
   removeTrip(e.target.dataset.id);
 };
 
-export { handleSubmit, onKeydown, init };
+export { onKeydown, init };
