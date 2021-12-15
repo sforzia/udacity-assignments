@@ -60,6 +60,17 @@ const toggleAddTrip = () => {
     const visibility = addTripOverlay.style.visibility;
     addTripOverlay.style.visibility =
       visibility == "visible" ? "hidden" : "visible";
+    if (addTripOverlay.style.visibility == "visible") {
+      const loc = addTripOverlay.querySelector("#location");
+      if (loc) {
+        loc.focus();
+      }
+    } else {
+      const addTripButton = document.querySelector("#addtripbutton");
+      if (addTripButton) {
+        addTripButton.focus();
+      }
+    }
   }
 };
 
@@ -71,7 +82,7 @@ const submitButtonListener = () => {
       e.preventDefault();
       e.stopPropagation();
       const date = document.querySelector("#journey-date");
-      const cityName = document.querySelector("#zip");
+      const cityName = document.querySelector("#location");
       let flag = false;
       if (isNaN(new Date(date.value))) {
         flag = true;
@@ -150,8 +161,7 @@ const createTripLayoutFragment = (trip) => {
   tripDetailsContainer.className = "trip-details";
   weatherContainer.className = "weather-container";
   weatherTitle.className = "weather-title";
-  weatherTitle.innerHTML =
-    trip.weather.length == 1 ? "Current Weather" : "Weather Forecast";
+  weatherTitle.innerHTML = "Typical weather for the location is: ";
   weatherContainer.appendChild(weatherTitle);
   weatherContainer.appendChild(createWeatherLayout(trip.weather));
   removeButton.addEventListener("click", removeTripListener);
@@ -162,11 +172,11 @@ const createTripLayoutFragment = (trip) => {
   tripContainer.id = trip.id;
   const tripDestination = document.createElement("p");
   const tripDate = document.createElement("p");
-  const destinationSpan = `Destination: <span class='destination'>${trip.destination}, ${trip.country}</span>`;
+  const destinationSpan = `<span class='highlight'>My trip to:</span> <span class='destination'>${trip.destination}, ${trip.country}</span>`;
   const dateSpan = `<span class='date'>${new Date(
     +trip.tripDate
   ).toLocaleDateString("en-US", dateFormatter)}</span>`;
-  tripDate.innerHTML = `Departure: ${dateSpan}`;
+  tripDate.innerHTML = `<span class='highlight'>Departing:</span> ${dateSpan}`;
   tripDestination.innerHTML = `${destinationSpan}`;
   let destinationImage = null;
   if (trip.pixibay && trip.pixibay.img) {
@@ -192,29 +202,32 @@ const createWeatherLayout = (weather) => {
   const div = document.createElement("div");
   div.className = "weather-wrapper";
   if (weather) {
-    if (weather.length) {
-      if (weather.length == 1) {
-      } else if (weather.length == 7) {
-      }
-      for (let item of weather) {
-        const inner = document.createElement("div");
-        inner.className = "weather";
-        for (let key in item) {
-          console.log("Key: ", key, item, item[key]);
-          const p = document.createElement("p");
-          p.className = key;
-          if (key == "vis") {
-            p.innerHTML = `Visibility: ${item[key]}`;
-          } else if (key == "temp") {
-            p.innerHTML = `Temperature: ${item[key]}`;
-          } else if (key == "weather") {
-            p.innerHTML = `Sky: ${item[key].description}`;
-          }
-          inner.appendChild(p);
+    if ("min_temp" in weather) {
+      for (let key in weather) {
+        const p = document.createElement("p");
+        p.className = key;
+        if (key == "min_temp") {
+          p.innerHTML = `Low: ${weather[key]}`;
+        } else if (key == "max_temp") {
+          p.innerHTML = `High: ${weather[key]}`;
+        } else if (key == "description") {
+          p.innerHTML = `<em>${weather[key]}</em>`;
         }
-        div.appendChild(inner);
+        div.appendChild(p);
+      }
+    } else {
+      for (let key in weather) {
+        const p = document.createElement("p");
+        p.className = key;
+        if (key == "temp") {
+          p.innerHTML = `Temperature: ${weather[key]}`;
+        } else if (key == "description") {
+          p.innerHTML = `<em>${weather[key]}</em>`;
+        }
+        div.appendChild(p);
       }
     }
+    // div.appendChild(inner);
   }
   return div;
 };

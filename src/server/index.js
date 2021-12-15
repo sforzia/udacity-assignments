@@ -60,7 +60,7 @@ app.get("/getCoordinates", (req, res) => {
               axios(`${pixabayApi}${loc}`)
                 .then((pixibayResponse) => {
                   let pixibay = null;
-                  let weather = [];
+                  let weather = {};
                   if (
                     pixibayResponse &&
                     pixibayResponse.data &&
@@ -91,26 +91,20 @@ app.get("/getCoordinates", (req, res) => {
                     weatherResponse.data.data &&
                     Array.isArray(weatherResponse.data.data)
                   ) {
-                    const obj = weatherResponse.data.data[0];
                     const {
-                      vis,
                       temp,
-                      sunset,
-                      sunrise,
                       min_temp,
                       max_temp,
                       datetime,
-                      sunset_ts,
-                      sunrise_ts,
                       weather: _weather,
                     } = weatherResponse.data.data[0];
-                    weather.push({
+                    weather = {
                       temp,
                       min_temp,
                       max_temp,
                       datetime,
-                      weather: _weather,
-                    });
+                      description: _weather.description,
+                    };
                   }
                   res.send({
                     lat,
