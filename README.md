@@ -1,20 +1,12 @@
 # Project Introduction
 
-Natural Language Processing leverage machine learning and deep learning create a program that can interpret natural human speech. Systems like Alexa, Google Assistant, and many voice interaction programs are well known to us, but understanding human speech is an incredibly difficult task and requires a lot of resources to achieve. Full disclosure, this is the Wikipedia definition, but I found it to be a clear one:
+A project to show the how APIs work behind the scene, how multiple APIs are called to show a meaningful, summarized response to the user. The user is provided with two simple inputs, text and date to book a trip. Rest of the logic works behind the scene and user is shown the response accordingly.
 
-> Natural language processing (NLP) is a subfield of computer science, information engineering, and artificial intelligence
-> concerned with the interactions between computers and human (natural) languages, in particular how to program computers to
-> process and analyze large amounts of natural language data.
-
-In this project we have used the `MeaningCloud's` text classification API. The definition of `text classification` as per `MeaningCloud's` documentation is:
-
-> Text Classification assigns one or more classes to a document according to their content. Classes are selected from a
-> previously established taxonomy (a hierarchy of catergories or classes). The Text Classification API takes care of all
-> preprocessing tasks (extracting text, tokenization, stopword removal and lemmatization) required for automatic classification.
+In this project we have used three different APIs, the `geonames` api to fetch the latitude and longitude of a given location, the `pixibay` api to search for popular images related to a given location, and the `weatherbit` api to get the current weather or forcast results.
 
 ## Getting started
 
-All dependencies for this project to run are already present in the `package.json` file. For this project to run properly you'll have to provide a `MeaningCloud` API key, Refer [here](#setup-meaningcloud-api-key). Once you clone this repo, you will have to install everything:
+All dependencies for this project to run are already present in the `package.json` file. For this project to run properly you'll have to provide the api keys to fetch data from their respective servers, refer [here](#setup-api-keys). Once you clone this repo, you will have to install everything:
 
 `cd` into your new folder and run:
 
@@ -25,7 +17,7 @@ and then run the express server by running `npm start`, the server is configured
 - `npm run build-dev` command will be used to run the webpack dev server, which will automatically reflect the changes once saved.
 - `npm run build-prod` command will be used to create an optimised build for production use.
 
-### Setup MeaningCloud API key
+### Setup API keys
 
 Next we need to include our API keys for this project to run:
 
@@ -35,7 +27,9 @@ Next we need to include our API keys for this project to run:
 - [ ] Fill the .env file with your API keys like this:
 
 ```
-API_KEY=**************************
+GEONAMES_USERNAME=********************************
+PIXABAY_API_KEY=**********************************
+WEATHERBIT_API_KEY=*******************************
 ```
 
 ## Deploying

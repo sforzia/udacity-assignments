@@ -7,13 +7,13 @@ const bodyParser = require("body-parser");
 dotenv.config();
 
 const EXPRESS_SERVER_PORT = 8081;
-const PIXABAY_API_KEY = process.env.PIXABAY_API_KEY;
+const PIXIBAY_API_KEY = process.env.PIXIBAY_API_KEY;
 const GEONAMES_USERNAME = process.env.GEONAMES_USERNAME;
 const WEATHERBIT_API_KEY = process.env.WEATHERBIT_API_KEY;
 
 const weatherbitApiCurrent = `https://api.weatherbit.io/v2.0/current?key=${WEATHERBIT_API_KEY}`;
 const geonamesApi = `http://api.geonames.org/searchJSON?username=${GEONAMES_USERNAME}&maxRows=10&q=`;
-const pixabayApi = `https://pixabay.com/api?key=${PIXABAY_API_KEY}&image_type=photo&safesearch=true&q=`;
+const pixabayApi = `https://pixabay.com/api?key=${PIXIBAY_API_KEY}&image_type=photo&safesearch=true&q=`;
 const weatherbitApiForecast = `https://api.weatherbit.io/v2.0/forecast/daily?key=${WEATHERBIT_API_KEY}`;
 
 const app = express();
