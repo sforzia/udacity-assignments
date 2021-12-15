@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Travel App</title>
+    <link href="https://fonts.googleapis.com/css?family=Oswald:400,600,700|Ranga:400,700&display=swap"
+        rel="stylesheet" />
+</head>
+
+<body>
+    <main id="app">
+        <div class="holder headline">
+            <h1>
+                Travel Planner
+            </h1>
+        </div>
+        <div id='trips'>
+            <div class='trips-header'>
+                <p>Your Trips</p>
+                <button id='addtripbutton'>
+                    <span>Add Trip</span>
+                </button>
+            </div>
+            <div id='trips-container'></div>
+        </div>
+        <div class="overlay">
+            <div class="message-area">
+                <p id='message'></p>
+                <button id="close-overlay">Close</button>
+            </div>
+        </div>
+        <div class='overlay add-trip-overlay' id='addTripOverlay'>
+            <div class="holder zip">
+                <div>
+                    <form>
+                        <label for='zip'></label><input type="text" id="location" name='destination'
+                            placeholder="Enter your destination" autocomplete="off">
+                        <div class="date-wrapper">
+                            <label for="journey-date">Journey date: </label><input type='date' id='journey-date'
+                                name="journeydate" />
+                        </div>
+                        <button id="formsubmitbtn" name="submitbutton" type="submit">
+                            <span class="text">Search</span>
+                            <span class="loader"></span>
+                        </button>
+                    </form>
+                </div>
+                <button title='Close Add Trip Overlay' class="btn-close-item" id='closeAddTripOverlayBtn'>
+                    <span>X</span>
+                </button>
+            </div>
+        </div>
+    </main>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js');
+            });
+        }
+    </script>
+
+</body>
+
+</html>
